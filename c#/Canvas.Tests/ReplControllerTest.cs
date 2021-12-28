@@ -27,7 +27,7 @@ public class ReplControllerTest
     }
 
     [Test]
-    public void TestCreateEmptyCanvas()
+    public void CreateEmptyCanvas()
     {
         _commandSource.Setup(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
