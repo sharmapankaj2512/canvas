@@ -9,21 +9,31 @@ namespace Canvas.Tests;
 [TestFixture]
 public class ReplControllerTest
 {
+    private Mock<ICommandSource> _commandSource;
+    private Mock<IDisplay> _display;
+
+    [SetUp]
+    public void Setup()
+    {
+        _commandSource = new Mock<ICommandSource>();
+        _display = new Mock<IDisplay>();
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        _commandSource.VerifyAll();
+        _display.VerifyAll();
+    }
+
     [Test]
     public void TestCreateEmptyCanvas()
     {
-        var commandSource = new Mock<ICommandSource>();
-        var display = new Mock<IDisplay>();
+        _commandSource.Setup(c => c.MoveNext()).Returns(true);
+        _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
+        _display.Setup(d => d.Render(Enumerable.Empty<Point2D>()));
 
-        commandSource.Setup(c => c.MoveNext()).Returns(true);
-        commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
-        display.Setup(d => d.Render(Enumerable.Empty<Point2D>()));
-
-        var repl = new ReplController(commandSource.Object, display.Object);
-        repl.Start();
-
-        commandSource.VerifyAll();
-        display.VerifyAll();
+        new ReplController(_commandSource.Object, _display.Object).Start();
     }
 
     public class CreateCanvas
