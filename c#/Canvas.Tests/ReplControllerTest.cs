@@ -19,7 +19,7 @@ public class ReplControllerTest
         commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
         display.Setup(d => d.Render(Enumerable.Empty<Point2D>()));
 
-        var repl = new ReplController(commandSource as ICommandSource, display as IDisplay);
+        var repl = new ReplController(commandSource.Object, display.Object);
         repl.Start();
 
         commandSource.VerifyAll();
@@ -36,12 +36,20 @@ public class ReplControllerTest
 
 public class ReplController
 {
+    private readonly ICommandSource _commandSource;
+    private readonly IDisplay _display;
+
     public ReplController(ICommandSource commandSource, IDisplay display)
     {
+        _commandSource = commandSource;
+        _display = display;
     }
 
     public void Start()
     {
+        _commandSource.MoveNext();
+        var command = _commandSource.Current;
+        _display.Render(Enumerable.Empty<Point2D>());
     }
 }
 
