@@ -35,6 +35,12 @@ public class ReplControllerTest
 
         new ReplController(_commandSource.Object, _display.Object).Start();
     }
+    
+    [Test]
+    public void TestCreateOneByOneCanvas()
+    {
+        Assert.Fail();
+    }
 
     public class CreateCanvas
     {
