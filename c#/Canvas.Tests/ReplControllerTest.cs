@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -67,18 +68,12 @@ public class ReplController
         _display.Render(points);
     }
 
-    private static List<Point2D> CreateCanvas(int width, int height)
+    private static IEnumerable<Point2D> CreateCanvas(int width, int height)
     {
-        var points = new List<Point2D>();
-        for (int x = 0; x < width; x++)
-        {
-            for (int y = 0; y < height; y++)
-            {
-                points.Add(new Point2D(x, y));
-            }
-        }
-
-        return points;
+        return Enumerable.Range(0, width)
+            .Zip(Enumerable.Range(0, height))
+            .Select(p => new Point2D(p.First, p.Second))
+            .ToList();
     }
 }
 
