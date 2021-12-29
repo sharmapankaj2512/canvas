@@ -30,10 +30,12 @@ class Canvas
             .ToList();
     }
 
-    public static Either<Error, Canvas> CreateCanvasv2(int w, int h)
+    public static Either<Error, Canvas> CreateCanvasv2(int width, int height)
     {
-        if (w < 0)
+        if (width < 0)
             return Left<Error, Canvas>(Error.New("Width should not be negative"));
+        if (height < 0)
+            return Left<Error, Canvas>(Error.New("Height should not be negative"));
         return null;
     }
 }
