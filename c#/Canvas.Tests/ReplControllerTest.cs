@@ -25,17 +25,7 @@ public class ReplControllerTest
     }
 
     [Test]
-    public void CreateEmptyCanvas()
-    {
-        _commandSource.Setup(c => c.MoveNext()).Returns(true);
-        _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
-        _display.Setup(d => d.Render(new List<Point2D>()));
-
-        new ReplController(_commandSource.Object, _display.Object).Start();
-    }
-
-    [Test]
-    public void TestCreateOneByOneCanvas()
+    public void CreateCanvasCommand()
     {
         _commandSource.Setup(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(1, 1));
