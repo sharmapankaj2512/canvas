@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -46,48 +44,3 @@ public class ReplControllerTest
         new ReplController(_commandSource.Object, _display.Object).Start();
     }
 }
-
-public record CreateCanvas(int Width, int Height);
-
-public class ReplController
-{
-    private readonly ICommandSource _commandSource;
-    private readonly IDisplay _display;
-
-    public ReplController(ICommandSource commandSource, IDisplay display)
-    {
-        _commandSource = commandSource;
-        _display = display;
-    }
-
-    public void Start()
-    {
-        _commandSource.MoveNext();
-        var (width, height) = _commandSource.Current;
-        var points = CreateCanvas(width, height);
-        _display.Render(points);
-    }
-
-    private static IEnumerable<Point2D> CreateCanvas(int width, int height)
-    {
-        return Enumerable.Range(0, width)
-            .Zip(Enumerable.Range(0, height))
-            .Select(p => new Point2D(p.First, p.Second))
-            .ToList();
-    }
-}
-
-public interface IDisplay
-{
-    void Render(IEnumerable<Point2D> points);
-}
-
-public interface ICommandSource : IEnumerator<CreateCanvas>, IEnumerable<CreateCanvas>
-{
-    bool IEnumerator.MoveNext()
-    {
-        return true;
-    }
-}
-
-public record Point2D(int X, int Y);
