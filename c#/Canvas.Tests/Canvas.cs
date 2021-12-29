@@ -5,10 +5,24 @@ namespace Canvas.Tests;
 
 class Canvas
 {
-    public IEnumerable<Point2D> CreateCanvas(int width, int height)
+    private int Width { get; }
+    private int Height { get; }
+
+    private Canvas(int width, int height)
     {
-        return Enumerable.Range(0, width)
-            .Zip(Enumerable.Range(0, height))
+        Width = width;
+        Height = height;
+    }
+
+    public static Canvas CreateCanvas(int width, int height)
+    {
+        return new Canvas(width, height);
+    }
+
+    public List<Point2D> Points()
+    {
+        return Enumerable.Range(0, Width)
+            .Zip(Enumerable.Range(0, Height))
             .Select(p => new Point2D(p.First, p.Second))
             .ToList();
     }

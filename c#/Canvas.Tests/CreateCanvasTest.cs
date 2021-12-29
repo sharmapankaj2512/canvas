@@ -10,7 +10,7 @@ public class CreateCanvasTest
     public void CreateZeroByZeroCanvas()
     {
         Assert.AreEqual(
-            new Canvas().CreateCanvas(0, 0),
+            Canvas.CreateCanvas(0, 0).Points(),
             Enumerable.Empty<Point2D>());
     }
 }

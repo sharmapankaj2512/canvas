@@ -17,7 +17,7 @@ public class ReplController
     {
         _commandSource.MoveNext();
         var (width, height) = _commandSource.Current;
-        var points = new Canvas().CreateCanvas(width, height);
-        _display.Render(points);
+        var canvas =  Canvas.CreateCanvas(width, height);
+        _display.Render(canvas.Points());
     }
 }
