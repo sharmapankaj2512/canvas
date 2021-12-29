@@ -31,24 +31,23 @@ public class ReplControllerTest
     {
         _commandSource.Setup(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(0, 0));
-        _display.Setup(d => d.Render(Enumerable.Empty<Point2D>()));
+        _display.Setup(d => d.Render(new List<Point2D>()));
 
         new ReplController(_commandSource.Object, _display.Object).Start();
     }
-    
+
     [Test]
     public void TestCreateOneByOneCanvas()
     {
-        Assert.Fail();
-    }
+        _commandSource.Setup(c => c.MoveNext()).Returns(true);
+        _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(1, 1));
+        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
-    public class CreateCanvas
-    {
-        public CreateCanvas(int width, int height)
-        {
-        }
+        new ReplController(_commandSource.Object, _display.Object).Start();
     }
 }
+
+public record CreateCanvas(int Width, int Height);
 
 public class ReplController
 {
@@ -65,7 +64,16 @@ public class ReplController
     {
         _commandSource.MoveNext();
         var command = _commandSource.Current;
-        _display.Render(Enumerable.Empty<Point2D>());
+        var points = new List<Point2D>();
+        for (int x = 0; x < command.Width; x++)
+        {
+            for (int y = 0; y < command.Height; y++)
+            {
+                points.Add(new Point2D(x, y));
+            }
+        }
+
+        _display.Render(points);
     }
 }
 
@@ -74,7 +82,7 @@ public interface IDisplay
     void Render(IEnumerable<Point2D> points);
 }
 
-public interface ICommandSource : IEnumerator, IEnumerable
+public interface ICommandSource : IEnumerator<CreateCanvas>, IEnumerable<CreateCanvas>
 {
     bool IEnumerator.MoveNext()
     {
@@ -82,6 +90,9 @@ public interface ICommandSource : IEnumerator, IEnumerable
     }
 }
 
-public class Point2D
+public record Point2D
 {
+    public Point2D(int x, int y)
+    {
+    }
 }

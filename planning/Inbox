@@ -5,5 +5,8 @@ CommandEnumerable <- ReplController -> Display
 
 ReplController tests
 
-- create canvas
+- create empty canvas
+- create one by one canvas
+- create two by five canvas
+- create five by two canvas
 - quit
