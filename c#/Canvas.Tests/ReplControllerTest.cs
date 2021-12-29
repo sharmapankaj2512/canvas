@@ -90,9 +90,4 @@ public interface ICommandSource : IEnumerator<CreateCanvas>, IEnumerable<CreateC
     }
 }
 
-public record Point2D
-{
-    public Point2D(int x, int y)
-    {
-    }
-}
+public record Point2D(int X, int Y);
