@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-
 namespace Canvas.Tests;
 
 public class ReplController
@@ -17,7 +15,12 @@ public class ReplController
     {
         _commandSource.MoveNext();
         var (width, height) = _commandSource.Current;
-        var canvas =  Canvas.CreateCanvas(width, height);
-        _display.Render(canvas.Points());
+        if (width >= 0)
+        {
+            var canvas = Canvas.CreateCanvas(width, height);
+            _display.Render(canvas.Points());
+        }
+        else
+            _display.RenderError("Width should not be negative");
     }
 }

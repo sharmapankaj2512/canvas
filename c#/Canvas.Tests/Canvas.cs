@@ -1,5 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using LanguageExt;
+using LanguageExt.Common;
+using static LanguageExt.Prelude;
 
 namespace Canvas.Tests;
 
@@ -23,7 +26,14 @@ class Canvas
     {
         return Enumerable.Range(0, Width)
             .Zip(Enumerable.Range(0, Height))
-            .Select(p => new Point2D(p.First, p.Second))
+            .Select(p => new Point2D(p.Item1, p.Item2))
             .ToList();
+    }
+
+    public static Either<Error, Canvas> CreateCanvasv2(int w, int h)
+    {
+        if (w < 0)
+            return Left<Error, Canvas>(Error.New("Width should not be negative"));
+        return null;
     }
 }
