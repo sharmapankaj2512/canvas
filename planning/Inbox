@@ -9,4 +9,8 @@ ReplController tests
 - create one by one canvas
 - create two by five canvas
 - create five by two canvas
+- do not let create canvas with negative width
+- do not let create canvas with negative height
+- create a canvas with huge width
+- create a cavas with huge height
 - quit
