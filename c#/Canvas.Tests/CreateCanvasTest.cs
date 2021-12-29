@@ -1,3 +1,4 @@
+using System.Linq;
 using NUnit.Framework;
 
 namespace Canvas.Tests;
@@ -8,6 +9,8 @@ public class CreateCanvasTest
     [Test]
     public void CreateZeroByZeroCanvas()
     {
-        Assert.Fail();
+        Assert.AreEqual(
+            new Canvas().CreateCanvas(0, 0),
+            Enumerable.Empty<Point2D>());
     }
 }
