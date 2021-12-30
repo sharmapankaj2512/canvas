@@ -22,4 +22,12 @@ public class InvalidCanvasTest
             Left<Error, Canvas>(Error.New("Height should not be negative")),
             Canvas.CreateCanvas(1, -1));
     }
+
+    [Test]
+    public void WidhtExceedsLimit()
+    {
+        Assert.AreEqual(
+            Left<Error, Canvas>(Error.New("Width exceeds limit")),
+            Canvas.CreateCanvas(51, 3));
+    }
 }
