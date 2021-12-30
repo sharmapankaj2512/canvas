@@ -1,6 +1,4 @@
-using LanguageExt.Common;
 using NUnit.Framework;
-using static LanguageExt.Prelude;
 
 namespace Canvas.Tests;
 
@@ -11,7 +9,7 @@ public class InvalidCanvasTest
     public void NegativeWidth()
     {
         Assert.AreEqual(
-            Left<Error, Canvas>(Error.New("Width should not be negative")),
+            Either<Error, Canvas>.MakeLeft(Error.New("Width should not be negative")),
             Canvas.CreateCanvas(-1, 0));
     }
 
@@ -19,7 +17,7 @@ public class InvalidCanvasTest
     public void NegativeHeight()
     {
         Assert.AreEqual(
-            Left<Error, Canvas>(Error.New("Height should not be negative")),
+            Either<Error, Canvas>.MakeLeft(Error.New("Height should not be negative")),
             Canvas.CreateCanvas(1, -1));
     }
 
@@ -27,7 +25,7 @@ public class InvalidCanvasTest
     public void WidhtExceedsLimit()
     {
         Assert.AreEqual(
-            Left<Error, Canvas>(Error.New("Width exceeds limit")),
+            Either<Error, Canvas>.MakeLeft(Error.New("Width exceeds limit")),
             Canvas.CreateCanvas(51, 3));
     }
 
@@ -35,7 +33,7 @@ public class InvalidCanvasTest
     public void HeightExceedsLimit()
     {
         Assert.AreEqual(
-            Left<Error, Canvas>(Error.New("Height exceeds limit")),
+            Either<Error, Canvas>.MakeLeft(Error.New("Height exceeds limit")),
             Canvas.CreateCanvas(3, 51));
     }
 }
