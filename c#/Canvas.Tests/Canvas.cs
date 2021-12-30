@@ -33,9 +33,9 @@ class Canvas
     public static Either<Error, Canvas> CreateCanvasv2(int width, int height)
     {
         if (width < 0)
-            return Left<Error, Canvas>(Error.New("Width should not be negative"));
+            return Left(Error.New("Width should not be negative"));
         if (height < 0)
-            return Left<Error, Canvas>(Error.New("Height should not be negative"));
-        return null;
+            return Left(Error.New("Height should not be negative"));
+        return Right(new Canvas(width, height));
     }
 }

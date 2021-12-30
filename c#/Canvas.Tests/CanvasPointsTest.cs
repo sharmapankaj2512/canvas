@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
@@ -22,7 +21,7 @@ public class CanvasPointsTest
     [TestCaseSource("CanvasPointsData")]
     public void CanvasPoints(int width, int height, IEnumerable<Point2D> expected)
     {
-        var aCanvas = Canvas.CreateCanvas(width, height);
-        Assert.AreEqual(aCanvas.Points(), expected);
+        var aCanvas = Canvas.CreateCanvasv2(width, height);
+        aCanvas.Do(c => Assert.AreEqual(c.Points(), expected));
     }
 }
