@@ -35,11 +35,11 @@ public class ReplControllerTest
     }
 
     [Test]
-    public void NegativeWidthCreateCanvasCommand()
+    public void InvalidCreateCanvasCommand()
     {
         _commandSource.Setup(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(-1, 1));
-        _display.Setup(d => d.RenderError("Width should not be negative"));
+        _display.Setup(d => d.RenderError(It.IsAny<string>()));
         
         new ReplController(_commandSource.Object, _display.Object).Start();
     }
