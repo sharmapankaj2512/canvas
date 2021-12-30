@@ -17,12 +17,11 @@ class Canvas
         Height = height;
     }
 
-    public List<Point2D> Points()
+    public IEnumerable<Point2D> Points()
     {
-        return Enumerable.Range(0, Width)
-            .Zip(Enumerable.Range(0, Height))
-            .Select(p => new Point2D(p.Item1, p.Item2))
-            .ToList();
+        return Enumerable.ToList(from x in Enumerable.Range(0, Width)
+                                 from y in Enumerable.Range(0, Height)
+                                 select new Point2D(x, y));
     }
 
     public static Either<Error, Canvas> CreateCanvas(int width, int height)
