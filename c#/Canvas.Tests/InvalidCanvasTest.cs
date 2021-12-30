@@ -12,7 +12,7 @@ public class InvalidCanvasTest
     {
         Assert.AreEqual(
             Left<Error, Canvas>(Error.New("Width should not be negative")),
-            Canvas.CreateCanvasv2(-1, 0));
+            Canvas.CreateCanvas(-1, 0));
     }
 
     [Test]
@@ -20,6 +20,6 @@ public class InvalidCanvasTest
     {
         Assert.AreEqual(
             Left<Error, Canvas>(Error.New("Height should not be negative")),
-            Canvas.CreateCanvasv2(1, -1));
+            Canvas.CreateCanvas(1, -1));
     }
 }

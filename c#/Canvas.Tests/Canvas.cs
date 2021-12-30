@@ -17,11 +17,6 @@ class Canvas
         Height = height;
     }
 
-    public static Canvas CreateCanvas(int width, int height)
-    {
-        return new Canvas(width, height);
-    }
-
     public List<Point2D> Points()
     {
         return Enumerable.Range(0, Width)
@@ -30,7 +25,7 @@ class Canvas
             .ToList();
     }
 
-    public static Either<Error, Canvas> CreateCanvasv2(int width, int height)
+    public static Either<Error, Canvas> CreateCanvas(int width, int height)
     {
         if (width < 0)
             return Left(Error.New("Width should not be negative"));

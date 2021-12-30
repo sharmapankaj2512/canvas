@@ -21,7 +21,7 @@ public class CanvasPointsTest
     [TestCaseSource("CanvasPointsData")]
     public void CanvasPoints(int width, int height, IEnumerable<Point2D> expected)
     {
-        var aCanvas = Canvas.CreateCanvasv2(width, height);
+        var aCanvas = Canvas.CreateCanvas(width, height);
         aCanvas.Do(c => Assert.AreEqual(c.Points(), expected));
     }
 }

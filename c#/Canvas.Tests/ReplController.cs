@@ -15,12 +15,8 @@ public class ReplController
     {
         _commandSource.MoveNext();
         var (width, height) = _commandSource.Current;
-        if (width >= 0)
-        {
-            var canvas = Canvas.CreateCanvas(width, height);
-            _display.Render(canvas.Points());
-        }
-        else
-            _display.RenderError("Width should not be negative");
+        Canvas.CreateCanvas(width, height)
+            .Match(Left: error => _display.RenderError(error.Message),
+                Right: canvas => _display.Render(canvas.Points()));
     }
 }
