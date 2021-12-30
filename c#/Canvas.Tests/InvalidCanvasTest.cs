@@ -30,4 +30,12 @@ public class InvalidCanvasTest
             Left<Error, Canvas>(Error.New("Width exceeds limit")),
             Canvas.CreateCanvas(51, 3));
     }
+
+    [Test]
+    public void HeightExceedsLimit()
+    {
+        Assert.AreEqual(
+            Left<Error, Canvas>(Error.New("Height exceeds limit")),
+            Canvas.CreateCanvas(3, 51));
+    }
 }

@@ -33,6 +33,8 @@ class Canvas
             return Left(Error.New("Height should not be negative"));
         if (width > 50)
             return Left(Error.New("Width exceeds limit"));
+        if (height > 50)
+            return Left(Error.New("Height exceeds limit"));
         return Right(new Canvas(width, height));
     }
 }
