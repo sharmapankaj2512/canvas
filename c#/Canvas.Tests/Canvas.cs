@@ -17,9 +17,9 @@ class Canvas
 
     public IEnumerable<Point2D> Points()
     {
-        return Enumerable.ToList(from x in Enumerable.Range(0, Width)
+        return (from x in Enumerable.Range(0, Width)
             from y in Enumerable.Range(0, Height)
-            select new Point2D(x, y));
+            select new Point2D(x, y)).ToList();
     }
 
     public static Either<Error, Canvas> CreateCanvas(int width, int height)
