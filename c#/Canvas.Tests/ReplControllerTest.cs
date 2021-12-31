@@ -83,4 +83,18 @@ public class ReplControllerTest
         
         _display.VerifyAll();
     }
+
+    [Test]
+    public void OtherCommandFiredAfterCanvasCreationFailed()
+    {
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
+        _commandSource.SetupSequence(c => c.Current)
+            .Returns(new CreateCanvas(-1, 1))
+            .Returns(new PrintCanvas());
+        _display.Setup(d => d.RenderError("create canvas first"));
+        
+        new ReplController(_commandSource.Object, _display.Object).Start();
+        
+        _display.VerifyAll();
+    }
 }
