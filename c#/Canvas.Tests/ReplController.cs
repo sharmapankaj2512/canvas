@@ -19,23 +19,32 @@ public class ReplController
             switch (_commandSource.Current)
             {
                 case CreateCanvas(var width, var height):
-                    canvas = Canvas.CreateCanvas(width, height)
-                        .ConsumeLeft(error => _display.RenderError(error.Message))
-                        .ConsumeRight(c => _display.Render(c.Points()));
+                    canvas = OnCreateCanvas(width, height);
                     break;
                 case PrintCanvas:
-                    if (canvas == null)
-                    {
-                        _display.RenderError("create canvas first");
-                    }
-                    else
-                    {
-                        canvas.ConsumeLeft(error => _display.RenderError(error.Message))
-                            .ConsumeRight(c => _display.Render(c.Points()));
-                    }
-
+                    OnPrintCanvas(canvas);
                     break;
             }
+        }
+    }
+
+    private Either<Error, Canvas> OnCreateCanvas(int width, int height)
+    {
+        return Canvas.CreateCanvas(width, height)
+            .ConsumeLeft(error => _display.RenderError(error.Message))
+            .ConsumeRight(c => _display.Render(c.Points()));
+    }
+
+    private void OnPrintCanvas(Either<Error, Canvas>? canvas)
+    {
+        if (canvas == null)
+        {
+            _display.RenderError("create canvas first");
+        }
+        else
+        {
+            canvas.ConsumeLeft(error => _display.RenderError(error.Message))
+                .ConsumeRight(c => _display.Render(c.Points()));
         }
     }
 }
