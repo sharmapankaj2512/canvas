@@ -13,7 +13,8 @@ public class ReplController
 
     public void Start()
     {
-        Either<Error, Canvas>? canvas = null;
+        var error = Error.New("create canvas first");
+        var canvas = EitherFactory.Left<Error, Canvas>(error);
         while (_commandSource.MoveNext())
         {
             switch (_commandSource.Current)
@@ -35,16 +36,10 @@ public class ReplController
             .ConsumeRight(c => _display.Render(c.Points()));
     }
 
-    private void OnPrintCanvas(Either<Error, Canvas>? canvas)
+    private void OnPrintCanvas(Either<Error, Canvas> createCanvas)
     {
-        if (canvas == null)
-        {
-            _display.RenderError("create canvas first");
-        }
-        else
-        {
-            canvas.ConsumeLeft(error => _display.RenderError(error.Message))
-                .ConsumeRight(c => _display.Render(c.Points()));
-        }
+        createCanvas
+            .ConsumeLeft(error => _display.RenderError(error.Message))
+            .ConsumeRight(c => _display.Render(c.Points()));
     }
 }
