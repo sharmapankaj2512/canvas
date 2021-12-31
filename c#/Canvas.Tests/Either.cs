@@ -50,3 +50,16 @@ public abstract record Either<TL, TR>
         }
     }
 }
+
+static class EitherFactory
+{
+    public static Either<TL, TR> Right<TL, TR>(TR rightValue)
+    {
+        return Either<TL, TR>.MakeRight(rightValue);
+    }
+
+    public static Either<TL, TR> Left<TL, TR>(TL leftValue)
+    {
+        return Either<TL, TR>.MakeLeft(leftValue);
+    }
+}

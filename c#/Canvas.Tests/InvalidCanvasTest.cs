@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using static Canvas.Tests.EitherFactory;
 
 namespace Canvas.Tests;
 
@@ -17,7 +18,7 @@ public class InvalidCanvasTest
     public void NegativeHeight()
     {
         Assert.AreEqual(
-            Either<Error, Canvas>.MakeLeft(Error.New("Height should not be negative")),
+            Left<Error, Canvas>(Error.New("Height should not be negative")),
             Canvas.CreateCanvas(1, -1));
     }
 
@@ -25,7 +26,7 @@ public class InvalidCanvasTest
     public void WidhtExceedsLimit()
     {
         Assert.AreEqual(
-            Either<Error, Canvas>.MakeLeft(Error.New("Width exceeds limit")),
+            Left<Error, Canvas>(Error.New("Width exceeds limit")),
             Canvas.CreateCanvas(51, 3));
     }
 
@@ -33,7 +34,7 @@ public class InvalidCanvasTest
     public void HeightExceedsLimit()
     {
         Assert.AreEqual(
-            Either<Error, Canvas>.MakeLeft(Error.New("Height exceeds limit")),
+            Left<Error, Canvas>(Error.New("Height exceeds limit")),
             Canvas.CreateCanvas(3, 51));
     }
 }

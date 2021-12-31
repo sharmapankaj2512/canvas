@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using static Canvas.Tests.EitherFactory;
 
 namespace Canvas.Tests;
 
@@ -8,14 +9,14 @@ public class EitherTest
     [Test]
     public void ConsumeLeft()
     {
-        Either<int, string>.MakeLeft(0).ConsumeLeft(actual => Assert.AreEqual(0, actual));
-        Either<int, string>.MakeLeft(0).ConsumeRight(_ => Assert.Fail());
+        Left<int, string>(0).ConsumeLeft(actual => Assert.AreEqual(0, actual));
+        Left<int, string>(0).ConsumeRight(_ => Assert.Fail());
     }
 
     [Test]
     public void ConsumeRight()
     {
-        Either<int, string>.MakeRight("0").ConsumeLeft(_ => Assert.Fail());
-        Either<int, string>.MakeRight("0").ConsumeRight(actual => Assert.AreEqual("0", actual));
+        Right<int, string>("0").ConsumeLeft(_ => Assert.Fail());
+        Right<int, string>("0").ConsumeRight(actual => Assert.AreEqual("0", actual));
     }
 }
