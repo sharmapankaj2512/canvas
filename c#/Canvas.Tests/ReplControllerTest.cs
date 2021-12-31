@@ -91,7 +91,7 @@ public class ReplControllerTest
         _commandSource.SetupSequence(c => c.Current)
             .Returns(new CreateCanvas(-1, 1))
             .Returns(new PrintCanvas());
-        _display.Setup(d => d.RenderError("create canvas first"));
+        _display.Setup(d => d.RenderError(It.IsAny<string>()));
         
         new ReplController(_commandSource.Object, _display.Object).Start();
         

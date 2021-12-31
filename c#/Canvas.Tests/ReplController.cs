@@ -30,7 +30,8 @@ public class ReplController
                     }
                     else
                     {
-                        canvas.ConsumeRight(c => _display.Render(c.Points()));
+                        canvas.ConsumeLeft(error => _display.RenderError(error.Message))
+                            .ConsumeRight(c => _display.Render(c.Points()));
                     }
 
                     break;
