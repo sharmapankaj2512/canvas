@@ -66,9 +66,21 @@ public class ReplControllerTest
             .Returns(new CreateCanvas(0, 0))
             .Returns(new PrintCanvas());
         _display.Setup(d => d.Render(new List<Point2D>()));
-        
+
         new ReplController(_commandSource.Object, _display.Object).Start();
 
         _display.Verify(d => d.Render(new List<Point2D>()), Times.Exactly(2));
+    }
+
+    [Test]
+    public void OtherCommandFiredBeforeCreateCanvasCommand()
+    {
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
+        _commandSource.Setup(c => c.Current).Returns(new PrintCanvas());
+        _display.Setup(d => d.RenderError("create canvas first"));
+        
+        new ReplController(_commandSource.Object, _display.Object).Start();
+        
+        _display.VerifyAll();
     }
 }
