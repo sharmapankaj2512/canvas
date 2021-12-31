@@ -24,7 +24,15 @@ public class ReplController
                         .ConsumeRight(c => _display.Render(c.Points()));
                     break;
                 case PrintCanvas:
-                    canvas?.ConsumeRight(c => _display.Render(c.Points()));
+                    if (canvas == null)
+                    {
+                        _display.RenderError("create canvas first");
+                    }
+                    else
+                    {
+                        canvas.ConsumeRight(c => _display.Render(c.Points()));
+                    }
+
                     break;
             }
         }
