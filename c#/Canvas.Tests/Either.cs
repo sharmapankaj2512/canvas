@@ -14,21 +14,21 @@ public abstract record Either<TL, TR>
         return new Right(rightValue);
     }
 
-    public abstract Either<TL, TR> ApplyLeft(Action<TL> leftConsumer);
+    public abstract Either<TL, TR> ConsumeLeft(Action<TL> leftConsumer);
 
-    public abstract Either<TL, TR> ApplyRight(Action<TR> rightConsumer);
+    public abstract Either<TL, TR> ConsumeRight(Action<TR> rightConsumer);
 
     sealed record Left(TL _leftValue) : Either<TL, TR>
     {
         private readonly TL _leftValue = _leftValue;
 
-        public override Either<TL, TR> ApplyLeft(Action<TL> leftConsumer)
+        public override Either<TL, TR> ConsumeLeft(Action<TL> leftConsumer)
         {
             leftConsumer(_leftValue);
             return this;
         }
 
-        public override Either<TL, TR> ApplyRight(Action<TR> rightConsumer)
+        public override Either<TL, TR> ConsumeRight(Action<TR> rightConsumer)
         {
             return this;
         }
@@ -38,12 +38,12 @@ public abstract record Either<TL, TR>
     {
         private readonly TR _rightValue = _rightValue;
 
-        public override Either<TL, TR> ApplyLeft(Action<TL> leftConsumer)
+        public override Either<TL, TR> ConsumeLeft(Action<TL> leftConsumer)
         {
             return this;
         }
 
-        public override Either<TL, TR> ApplyRight(Action<TR> rightConsumer)
+        public override Either<TL, TR> ConsumeRight(Action<TR> rightConsumer)
         {
             rightConsumer(_rightValue);
             return this;

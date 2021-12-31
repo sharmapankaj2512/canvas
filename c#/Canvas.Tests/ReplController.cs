@@ -16,7 +16,7 @@ public class ReplController
         _commandSource.MoveNext();
         var (width, height) = _commandSource.Current;
         Canvas.CreateCanvas(width, height)
-            .ApplyLeft(error => _display.RenderError(error.Message))
-            .ApplyRight(canvas => _display.Render(canvas.Points()));
+            .ConsumeLeft(error => _display.RenderError(error.Message))
+            .ConsumeRight(canvas => _display.Render(canvas.Points()));
     }
 }

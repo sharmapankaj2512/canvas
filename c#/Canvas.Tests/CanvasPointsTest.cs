@@ -26,6 +26,6 @@ public class CanvasPointsTest
     public void CanvasPoints(int width, int height, IEnumerable<Point2D> expected)
     {
         Canvas.CreateCanvas(width, height)
-              .ApplyRight(c => Assert.AreEqual(c.Points(), expected));
+              .ConsumeRight(c => Assert.AreEqual(c.Points(), expected));
     }
 }
