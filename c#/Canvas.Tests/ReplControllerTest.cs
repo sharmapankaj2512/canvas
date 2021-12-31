@@ -43,4 +43,18 @@ public class ReplControllerTest
         
         new ReplController(_commandSource.Object, _display.Object).Start();
     }
+
+    [Test]
+    public void PrintCanvasCommand()
+    {
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
+        _commandSource.SetupSequence(c => c.Current)
+            .Returns(new CreateCanvas(1, 1))
+            .Returns(new PrintCanvas());
+        
+        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
+        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
+        
+        new ReplController(_commandSource.Object, _display.Object).Start();
+    }
 }
