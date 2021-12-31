@@ -13,6 +13,14 @@ public class MaybeTest
             .ConsumeNone(Assert.Pass)
             .ConsumeSome(_ => Assert.Fail());
     }
+
+    [Test]
+    public void ConsumeSome()
+    {
+        MaybeFactory.Some(1)
+            .ConsumeNone(Assert.Fail)
+            .ConsumeSome(v => Assert.AreEqual(1, v));
+    }
 }
 
 static class MaybeFactory
@@ -28,7 +36,7 @@ static class MaybeFactory
     }
 }
 
-public record Maybe<S>
+public abstract record Maybe<S>
 {
     public static Maybe<S> MakeSome(S someValue)
     {
@@ -40,18 +48,34 @@ public record Maybe<S>
         return new None();
     }
 
-    sealed record Some(S SomeValue) : Maybe<S>;
+    public abstract Maybe<S> ConsumeNone(Action action);
+    public abstract Maybe<S> ConsumeSome(Action<S> action);
 
-    sealed record None : Maybe<S>;
-
-    public Maybe<S> ConsumeNone(Action action)
+    sealed record Some(S SomeValue) : Maybe<S>
     {
-        action.Invoke();
-        return this;
+        public override Maybe<S> ConsumeNone(Action action)
+        {
+            return this;
+        }
+
+        public override Maybe<S> ConsumeSome(Action<S> action)
+        {
+            action.Invoke(SomeValue);
+            return this;
+        }
     }
 
-    public Maybe<S> ConsumeSome(Action<S> action)
+    sealed record None : Maybe<S>
     {
-        return this;
+        public override Maybe<S> ConsumeNone(Action action)
+        {
+            action.Invoke();
+            return this;
+        }
+
+        public override Maybe<S> ConsumeSome(Action<S> action)
+        {
+            return this;
+        }
     }
 }
