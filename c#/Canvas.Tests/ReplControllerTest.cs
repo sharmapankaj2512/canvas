@@ -17,31 +17,28 @@ public class ReplControllerTest
         _display = new Mock<IDisplay>();
     }
 
-    [TearDown]
-    public void TearDown()
-    {
-        _commandSource.VerifyAll();
-        _display.VerifyAll();
-    }
-
     [Test]
     public void CreateCanvasCommand()
     {
-        _commandSource.Setup(c => c.MoveNext()).Returns(true);
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(false);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(1, 1));
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
         new ReplController(_commandSource.Object, _display.Object).Start();
+
+        _display.VerifyAll();
     }
 
     [Test]
     public void InvalidCreateCanvasCommand()
     {
-        _commandSource.Setup(c => c.MoveNext()).Returns(true);
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(-1, 1));
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
-        
+
         new ReplController(_commandSource.Object, _display.Object).Start();
+
+        _display.VerifyAll();
     }
 
     [Test]
@@ -51,10 +48,11 @@ public class ReplControllerTest
         _commandSource.SetupSequence(c => c.Current)
             .Returns(new CreateCanvas(1, 1))
             .Returns(new PrintCanvas());
-        
+
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
-        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
-        
+
         new ReplController(_commandSource.Object, _display.Object).Start();
+
+        _display.Verify(d => d.Render(new List<Point2D> {new(0, 0)}), Times.Exactly(2));
     }
 }
