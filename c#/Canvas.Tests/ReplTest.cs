@@ -97,4 +97,19 @@ public class ReplTest
         
         _display.VerifyAll();
     }
+
+    [Test]
+    public void DrawPointCommand()
+    {
+        _commandSource.SetupSequence(c => c.MoveNext())
+            .Returns(true).Returns(true).Returns(true);
+        _commandSource.SetupSequence(c => c.Current)
+            .Returns(new CreateCanvas(1, 1))
+            .Returns(new DrawPoint(0, 0));
+        _display.Setup(d => d.Render(new List<Point2D> {new Border(0, 0)}));
+        
+        new Repl(_commandSource.Object, _display.Object).Start();
+        
+        _display.VerifyAll();
+    }
 }
