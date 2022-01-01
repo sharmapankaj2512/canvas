@@ -28,12 +28,7 @@ public class Repl
                     OnPrintCanvas(canvas);
                     break;
                 case DrawPoint(var x, var y):
-                    canvas.ConsumeRight(c =>
-                    {
-                        c.DrawPoint(Tuple.Create(x, y))
-                            .ConsumeNone(() => _display.Render(c.Points()))
-                            .ConsumeSome(e => _display.RenderError(e.Message));
-                    });
+                    OnDrawPoint(canvas, x, y);
                     break;
             }
         }
@@ -51,5 +46,15 @@ public class Repl
         createCanvas
             .ConsumeLeft(error => _display.RenderError(error.Message))
             .ConsumeRight(c => _display.Render(c.Points()));
+    }
+    
+    private void OnDrawPoint(Either<Error, Canvas> canvas, int x, int y)
+    {
+        canvas.ConsumeRight(c =>
+        {
+            c.DrawPoint(Tuple.Create(x, y))
+                .ConsumeNone(() => _display.Render(c.Points()))
+                .ConsumeSome(e => _display.RenderError(e.Message));
+        });
     }
 }
