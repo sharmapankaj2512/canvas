@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Canvas.Tests.EitherFactory;
+using static Canvas.Tests.MaybeFactory;
 
 namespace Canvas.Tests;
 
@@ -45,8 +46,11 @@ class Canvas
         return Right<Error, Canvas>(new Canvas(width, height));
     }
 
-    public void DrawPoint(Tuple<int, int> border)
+    public Maybe<Error> DrawPoint(Tuple<int, int> border)
     {
+        if (border.Item1 < 0)
+            return Some(Error.New("x co-ordinate should be positive"));
         _borders.Add(new Border(border.Item1, border.Item2));
+        return None<Error>();
     }
 }

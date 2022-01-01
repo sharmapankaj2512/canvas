@@ -58,4 +58,15 @@ public class DrawPointTest
             }, canvas.Points());
         });
     }
+
+    [Test]
+    public void NegativeX()
+    {
+        Canvas.CreateCanvas(0, 0).ConsumeRight(canvas =>
+        {
+            Assert.AreEqual(
+                MaybeFactory.Some(Error.New("x co-ordinate should be positive")),
+                canvas.DrawPoint(Tuple.Create(-1, 0)));
+        });
+    }
 }
