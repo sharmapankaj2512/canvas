@@ -63,13 +63,14 @@ public class DrawPointTest
     [TestCase(-1, 0)]
     [TestCase(1, 0)]
     [TestCase(0, -1)]
+    [TestCase(0, 1)]
     public void PointOutsideCanvas(int x, int y)
     {
         Canvas.CreateCanvas(1, 1).ConsumeRight(canvas =>
         {
             Assert.AreEqual(
                 MaybeFactory.Some(Error.New("point outside canvas")),
-                canvas.DrawPoint(Tuple.Create(-1, 0)));
+                canvas.DrawPoint(Tuple.Create(x, y)));
         });
     }
 }

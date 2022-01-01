@@ -50,7 +50,8 @@ class Canvas
     {
         if (border.Item1 < 0 
             || border.Item1 >= Width
-            || border.Item2 < 0)
+            || border.Item2 < 0
+            || border.Item2 >= Height)
             return Some(Error.New("point outside canvas"));
         _borders.Add(new Border(border.Item1, border.Item2));
         return None<Error>();
