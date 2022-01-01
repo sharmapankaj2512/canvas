@@ -48,7 +48,9 @@ class Canvas
 
     public Maybe<Error> DrawPoint(Tuple<int, int> border)
     {
-        if (border.Item1 < 0 || border.Item1 >= Width)
+        if (border.Item1 < 0 
+            || border.Item1 >= Width
+            || border.Item2 < 0)
             return Some(Error.New("point outside canvas"));
         _borders.Add(new Border(border.Item1, border.Item2));
         return None<Error>();

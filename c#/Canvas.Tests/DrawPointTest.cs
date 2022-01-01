@@ -62,6 +62,7 @@ public class DrawPointTest
     [Test]
     [TestCase(-1, 0)]
     [TestCase(1, 0)]
+    [TestCase(0, -1)]
     public void PointOutsideCanvas(int x, int y)
     {
         Canvas.CreateCanvas(1, 1).ConsumeRight(canvas =>
