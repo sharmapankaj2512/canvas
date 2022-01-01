@@ -29,7 +29,12 @@ public class Repl
                     OnPrintCanvas(canvas);
                     break;
                 case DrawPoint(var x, var y):
-                    _display.Render(new List<Point2D> {new Border(x, y)});
+                    canvas.ConsumeRight(c =>
+                    {
+                        c.DrawPoint(new Border(x, y));
+                        _display.Render(c.Points());
+                    });
+                    
                     break;
             }
         }

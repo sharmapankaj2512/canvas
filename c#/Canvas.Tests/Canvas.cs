@@ -6,6 +6,7 @@ namespace Canvas.Tests;
 
 class Canvas
 {
+    private Border _border;
     private int Width { get; }
     private int Height { get; }
 
@@ -19,7 +20,16 @@ class Canvas
     {
         return (from x in Enumerable.Range(0, Width)
             from y in Enumerable.Range(0, Height)
-            select new Point2D(x, y)).ToList();
+            select MakePoint(x, y)).ToList();
+    }
+
+    private Point2D MakePoint(int x, int y)
+    {
+        if (this._border != null && _border.X == x && _border.Y == y)
+        {
+            return new Border(x, y);
+        }
+        return new Point2D(x, y);
     }
 
     public static Either<Error, Canvas> CreateCanvas(int width, int height)
@@ -33,5 +43,10 @@ class Canvas
         if (height > 50)
             return Left<Error, Canvas>(Error.New("Height exceeds limit"));
         return Right<Error, Canvas>(new Canvas(width, height));
+    }
+
+    public void DrawPoint(Border border)
+    {
+        this._border = border;
     }
 }
