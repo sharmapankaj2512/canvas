@@ -78,9 +78,9 @@ public class ReplTest
         _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
         _commandSource.Setup(c => c.Current).Returns(new PrintCanvas());
         _display.Setup(d => d.RenderError("create canvas first"));
-        
+
         new Repl(_commandSource.Object, _display.Object).Start();
-        
+
         _display.VerifyAll();
     }
 
@@ -92,9 +92,9 @@ public class ReplTest
             .Returns(new CreateCanvas(-1, 1))
             .Returns(new PrintCanvas());
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
-        
+
         new Repl(_commandSource.Object, _display.Object).Start();
-        
+
         _display.VerifyAll();
     }
 
@@ -107,9 +107,9 @@ public class ReplTest
             .Returns(new CreateCanvas(1, 1))
             .Returns(new DrawPoint(0, 0));
         _display.Setup(d => d.Render(new List<Point2D> {new Border(0, 0)}));
-        
+
         new Repl(_commandSource.Object, _display.Object).Start();
-        
+
         _display.VerifyAll();
     }
 }

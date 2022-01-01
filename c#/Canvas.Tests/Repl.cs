@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Canvas.Tests;
 
 public class Repl
@@ -24,6 +27,9 @@ public class Repl
                     break;
                 case PrintCanvas:
                     OnPrintCanvas(canvas);
+                    break;
+                case DrawPoint(var x, var y):
+                    _display.Render(new List<Point2D> {new Border(x, y)});
                     break;
             }
         }
