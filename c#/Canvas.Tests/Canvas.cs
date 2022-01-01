@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using static Canvas.Tests.EitherFactory;
@@ -6,7 +7,7 @@ namespace Canvas.Tests;
 
 class Canvas
 {
-    private Border _border;
+    private Tuple<int, int> _border;
     private int Width { get; }
     private int Height { get; }
 
@@ -25,7 +26,7 @@ class Canvas
 
     private Point2D MakePoint(int x, int y)
     {
-        if (this._border != null && _border.X == x && _border.Y == y)
+        if (this._border != null && _border.Item1 == x && _border.Item2 == y)
         {
             return new Border(x, y);
         }
@@ -45,7 +46,7 @@ class Canvas
         return Right<Error, Canvas>(new Canvas(width, height));
     }
 
-    public void DrawPoint(Border border)
+    public void DrawPoint(Tuple<int, int> border)
     {
         this._border = border;
     }

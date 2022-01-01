@@ -31,7 +31,7 @@ public class Repl
                 case DrawPoint(var x, var y):
                     canvas.ConsumeRight(c =>
                     {
-                        c.DrawPoint(new Border(x, y));
+                        c.DrawPoint(Tuple.Create(x, y));
                         _display.Render(c.Points());
                     });
                     
