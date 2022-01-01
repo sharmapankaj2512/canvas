@@ -8,7 +8,7 @@ namespace Canvas.Tests;
 public class DrawPointTest
 {
     [Test]
-    public void BorderPointOnly()
+    public void SingleAndOnlyBorderPoint()
     {
         Canvas.CreateCanvas(1, 1).ConsumeRight(canvas =>
         {
