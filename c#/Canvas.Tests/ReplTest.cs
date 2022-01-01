@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Moq;
 using NUnit.Framework;
@@ -21,22 +22,20 @@ public class ReplTest
     public void CreateCanvasCommand()
     {
         FakeCommandSource(new CreateCanvas(1, 1));
-        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderPoints(new List<Point2D> {new(0, 0)});
     }
 
     [Test]
     public void InvalidCreateCanvasCommand()
     {
         FakeCommandSource(new CreateCanvas(-1, 1));
-        _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderError();
     }
 
     [Test]
@@ -45,73 +44,67 @@ public class ReplTest
         FakeCommandSource(
             new CreateCanvas(1, 1),
             new PrintCanvas());
-        _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.Verify(d => d.Render(new List<Point2D> {new(0, 0)}), Times.Exactly(2));
+        AssertExpectRenderPoints(new List<Point2D> {new(0, 0)}, 2);
     }
 
     [Test]
     public void CreateCanvasCommandAgain()
     {
         FakeCommandSource(
-            new CreateCanvas(1, 1), 
-            new CreateCanvas(0, 0), 
+            new CreateCanvas(1, 1),
+            new CreateCanvas(0, 0),
             new PrintCanvas());
-        _display.Setup(d => d.Render(new List<Point2D>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
-
-        _display.Verify(d => d.Render(new List<Point2D>()), Times.Exactly(2));
+        
+        AssertExpectRenderPoints(new List<Point2D>(), 2);
     }
 
     [Test]
     public void OtherCommandFiredBeforeCreateCanvasCommand()
     {
         FakeCommandSource(new PrintCanvas());
-        _display.Setup(d => d.RenderError("create canvas first"));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderError("create canvas first");
     }
 
     [Test]
     public void OtherCommandFiredAfterCanvasCreationFailed()
     {
         FakeCommandSource(
-            new CreateCanvas(-1, 1), 
+            new CreateCanvas(-1, 1),
             new PrintCanvas());
-        _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderError();
     }
 
     [Test]
     public void DrawPointCommand()
     {
         FakeCommandSource(
-            new CreateCanvas(1, 1), 
+            new CreateCanvas(1, 1),
             new DrawPoint(0, 0));
-        _display.Setup(d => d.Render(new List<Point2D> {new Border(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderPoints(new List<Point2D> {new Border(0, 0)});
     }
 
     [Test]
     public void InvalidDrawPointCommand()
     {
         FakeCommandSource(new CreateCanvas(1, 1), new DrawPoint(-1, 0));
-        _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
-        _display.VerifyAll();
+        AssertExpectRenderError();
     }
 
     private void FakeCommandSource(params ICommand[] commands)
@@ -123,5 +116,19 @@ public class ReplTest
             moveNext.Returns(true);
             current.Returns(command);
         }
+    }
+
+    private void AssertExpectRenderPoints(List<Point2D> points, int times = 1)
+    {
+        _display.Verify(d => d.Render(points), Times.Exactly(times));
+    }
+
+    private void AssertExpectRenderError()
+    {
+        _display.Verify(d => d.RenderError(It.IsAny<string>()));
+    }
+    private void AssertExpectRenderError(string message)
+    {
+        _display.Verify(d => d.RenderError(message));
     }
 }
