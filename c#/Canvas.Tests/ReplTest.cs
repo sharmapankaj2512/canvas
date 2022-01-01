@@ -20,8 +20,7 @@ public class ReplTest
     [Test]
     public void CreateCanvasCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
-        _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(1, 1));
+        FakeCommandSource(new CreateCanvas(1, 1));
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -32,8 +31,7 @@ public class ReplTest
     [Test]
     public void InvalidCreateCanvasCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
-        _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(-1, 1));
+        FakeCommandSource(new CreateCanvas(-1, 1));
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -44,11 +42,9 @@ public class ReplTest
     [Test]
     public void PrintCanvasCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
-        _commandSource.SetupSequence(c => c.Current)
-            .Returns(new CreateCanvas(1, 1))
-            .Returns(new PrintCanvas());
-
+        FakeCommandSource(
+            new CreateCanvas(1, 1),
+            new PrintCanvas());
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -59,12 +55,10 @@ public class ReplTest
     [Test]
     public void CreateCanvasCommandAgain()
     {
-        _commandSource.SetupSequence(c => c.MoveNext())
-            .Returns(true).Returns(true).Returns(true);
-        _commandSource.SetupSequence(c => c.Current)
-            .Returns(new CreateCanvas(1, 1))
-            .Returns(new CreateCanvas(0, 0))
-            .Returns(new PrintCanvas());
+        FakeCommandSource(
+            new CreateCanvas(1, 1), 
+            new CreateCanvas(0, 0), 
+            new PrintCanvas());
         _display.Setup(d => d.Render(new List<Point2D>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -75,8 +69,7 @@ public class ReplTest
     [Test]
     public void OtherCommandFiredBeforeCreateCanvasCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true);
-        _commandSource.Setup(c => c.Current).Returns(new PrintCanvas());
+        FakeCommandSource(new PrintCanvas());
         _display.Setup(d => d.RenderError("create canvas first"));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -87,10 +80,9 @@ public class ReplTest
     [Test]
     public void OtherCommandFiredAfterCanvasCreationFailed()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
-        _commandSource.SetupSequence(c => c.Current)
-            .Returns(new CreateCanvas(-1, 1))
-            .Returns(new PrintCanvas());
+        FakeCommandSource(
+            new CreateCanvas(-1, 1), 
+            new PrintCanvas());
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
@@ -101,29 +93,35 @@ public class ReplTest
     [Test]
     public void DrawPointCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext())
-            .Returns(true).Returns(true).Returns(true);
-        _commandSource.SetupSequence(c => c.Current)
-            .Returns(new CreateCanvas(1, 1))
-            .Returns(new DrawPoint(0, 0));
+        FakeCommandSource(
+            new CreateCanvas(1, 1), 
+            new DrawPoint(0, 0));
         _display.Setup(d => d.Render(new List<Point2D> {new Border(0, 0)}));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.VerifyAll();
     }
-    
+
     [Test]
     public void InvalidDrawPointCommand()
     {
-        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
-        _commandSource.SetupSequence(c => c.Current)
-            .Returns(new CreateCanvas(1, 1))
-            .Returns(new DrawPoint(-1, 0));
+        FakeCommandSource(new CreateCanvas(1, 1), new DrawPoint(-1, 0));
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
         new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.VerifyAll();
+    }
+
+    private void FakeCommandSource(params ICommand[] commands)
+    {
+        var moveNext = _commandSource.SetupSequence(c => c.MoveNext());
+        var current = _commandSource.SetupSequence(c => c.Current);
+        foreach (var command in commands)
+        {
+            moveNext.Returns(true);
+            current.Returns(command);
+        }
     }
 }
