@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 
 namespace Canvas.Tests;
 
@@ -31,10 +30,10 @@ public class Repl
                 case DrawPoint(var x, var y):
                     canvas.ConsumeRight(c =>
                     {
-                        c.DrawPoint(Tuple.Create(x, y));
-                        _display.Render(c.Points());
+                        c.DrawPoint(Tuple.Create(x, y))
+                            .ConsumeNone(() => _display.Render(c.Points()))
+                            .ConsumeSome(e => _display.RenderError(e.Message));
                     });
-                    
                     break;
             }
         }

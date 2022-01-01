@@ -112,4 +112,18 @@ public class ReplTest
 
         _display.VerifyAll();
     }
+    
+    [Test]
+    public void InvalidDrawPointCommand()
+    {
+        _commandSource.SetupSequence(c => c.MoveNext()).Returns(true).Returns(true);
+        _commandSource.SetupSequence(c => c.Current)
+            .Returns(new CreateCanvas(1, 1))
+            .Returns(new DrawPoint(-1, 0));
+        _display.Setup(d => d.RenderError(It.IsAny<string>()));
+
+        new Repl(_commandSource.Object, _display.Object).Start();
+
+        _display.VerifyAll();
+    }
 }
