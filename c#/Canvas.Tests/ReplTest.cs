@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Canvas.Tests;
 
 [TestFixture]
-public class ReplControllerTest
+public class ReplTest
 {
     private Mock<ICommandSource> _commandSource;
     private Mock<IDisplay> _display;
@@ -24,7 +24,7 @@ public class ReplControllerTest
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(1, 1));
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.VerifyAll();
     }
@@ -36,7 +36,7 @@ public class ReplControllerTest
         _commandSource.Setup(c => c.Current).Returns(new CreateCanvas(-1, 1));
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
 
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.VerifyAll();
     }
@@ -51,7 +51,7 @@ public class ReplControllerTest
 
         _display.Setup(d => d.Render(new List<Point2D> {new(0, 0)}));
 
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.Verify(d => d.Render(new List<Point2D> {new(0, 0)}), Times.Exactly(2));
     }
@@ -67,7 +67,7 @@ public class ReplControllerTest
             .Returns(new PrintCanvas());
         _display.Setup(d => d.Render(new List<Point2D>()));
 
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
 
         _display.Verify(d => d.Render(new List<Point2D>()), Times.Exactly(2));
     }
@@ -79,7 +79,7 @@ public class ReplControllerTest
         _commandSource.Setup(c => c.Current).Returns(new PrintCanvas());
         _display.Setup(d => d.RenderError("create canvas first"));
         
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
         
         _display.VerifyAll();
     }
@@ -93,7 +93,7 @@ public class ReplControllerTest
             .Returns(new PrintCanvas());
         _display.Setup(d => d.RenderError(It.IsAny<string>()));
         
-        new ReplController(_commandSource.Object, _display.Object).Start();
+        new Repl(_commandSource.Object, _display.Object).Start();
         
         _display.VerifyAll();
     }

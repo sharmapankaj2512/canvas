@@ -1,11 +1,11 @@
 namespace Canvas.Tests;
 
-public class ReplController
+public class Repl
 {
     private readonly ICommandSource _commandSource;
     private readonly IDisplay _display;
 
-    public ReplController(ICommandSource commandSource, IDisplay display)
+    public Repl(ICommandSource commandSource, IDisplay display)
     {
         _commandSource = commandSource;
         _display = display;
