@@ -62,11 +62,22 @@ public class DrawPointTest
     [Test]
     public void NegativeX()
     {
-        Canvas.CreateCanvas(0, 0).ConsumeRight(canvas =>
+        Canvas.CreateCanvas(1, 1).ConsumeRight(canvas =>
         {
             Assert.AreEqual(
-                MaybeFactory.Some(Error.New("x co-ordinate should be positive")),
+                MaybeFactory.Some(Error.New("point outside canvas")),
                 canvas.DrawPoint(Tuple.Create(-1, 0)));
+        });
+    }
+
+    [Test]
+    public void XGreaterThanCanvasWidth()
+    {
+        Canvas.CreateCanvas(1, 1).ConsumeRight(canvas =>
+        {
+            Assert.AreEqual(
+                MaybeFactory.Some(Error.New("point outside canvas")),
+                canvas.DrawPoint(Tuple.Create(1, 0)));
         });
     }
 }
