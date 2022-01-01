@@ -7,7 +7,7 @@ namespace Canvas.Tests;
 
 class Canvas
 {
-    private Tuple<int, int> _border;
+    private readonly HashSet<Border> _borders;
     private int Width { get; }
     private int Height { get; }
 
@@ -15,6 +15,7 @@ class Canvas
     {
         Width = width;
         Height = height;
+        _borders = new HashSet<Border>();
     }
 
     public IEnumerable<Point2D> Points()
@@ -26,11 +27,9 @@ class Canvas
 
     private Point2D MakePoint(int x, int y)
     {
-        if (this._border != null && _border.Item1 == x && _border.Item2 == y)
-        {
-            return new Border(x, y);
-        }
-        return new Point2D(x, y);
+        return _borders.Contains(new Border(x, y))
+            ? new Border(x, y)
+            : new Point2D(x, y);
     }
 
     public static Either<Error, Canvas> CreateCanvas(int width, int height)
@@ -48,6 +47,6 @@ class Canvas
 
     public void DrawPoint(Tuple<int, int> border)
     {
-        this._border = border;
+        _borders.Add(new Border(border.Item1, border.Item2));
     }
 }
