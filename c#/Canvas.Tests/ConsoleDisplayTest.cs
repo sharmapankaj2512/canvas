@@ -9,10 +9,23 @@ namespace Canvas.Tests;
 [TestFixture]
 public class ConsoleDisplayTest
 {
+    private TextWriter _originalConsoleOut = null!;
+
+    [SetUp]
+    public void Setup()
+    {
+        _originalConsoleOut = Console.Out;
+    }
+
+    [TearDown]
+    public void TearDown()
+    {
+        Console.SetOut(_originalConsoleOut);
+    }
+
     [Test]
     public void RenderCanvasBordersWhenNoPoints()
     {
-        var originalConsoleOut = Console.Out;
         using (var writer = new StringWriter())
         {
             Console.SetOut(writer);
@@ -25,8 +38,6 @@ public class ConsoleDisplayTest
                     "xx",
                 }, Unlines(writer.ToString().Trim()));
         }
-
-        Console.SetOut(originalConsoleOut);
     }
 
     private static List<string> Unlines(string text)
