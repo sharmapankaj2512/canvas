@@ -26,18 +26,16 @@ public class ConsoleDisplayTest
     [Test]
     public void RenderCanvasBordersWhenNoPoints()
     {
-        using (var writer = new StringWriter())
-        {
-            Console.SetOut(writer);
-            IDisplay display = new ConsoleDisplay(writer);
-            display.Render(Enumerable.Empty<Point2D>());
-            Assert.AreEqual(
-                new List<string>
-                {
-                    "xx",
-                    "xx",
-                }, Unlines(writer.ToString().Trim()));
-        }
+        using var writer = new StringWriter();
+        Console.SetOut(writer);
+        IDisplay display = new ConsoleDisplay(writer);
+        display.Render(Enumerable.Empty<Point2D>());
+        Assert.AreEqual(
+            new List<string>
+            {
+                "xx",
+                "xx",
+            }, Unlines(writer.ToString().Trim()));
     }
 
     private static List<string> Unlines(string text)
