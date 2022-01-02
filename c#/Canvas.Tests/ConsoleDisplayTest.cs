@@ -10,11 +10,14 @@ namespace Canvas.Tests;
 public class ConsoleDisplayTest
 {
     private TextWriter _originalConsoleOut = null!;
+    private StringWriter _writer = null!;
 
     [SetUp]
     public void Setup()
     {
+        _writer = new StringWriter();
         _originalConsoleOut = Console.Out;
+        Console.SetOut(_writer);
     }
 
     [TearDown]
@@ -26,16 +29,30 @@ public class ConsoleDisplayTest
     [Test]
     public void RenderCanvasBordersWhenNoPoints()
     {
-        using var writer = new StringWriter();
-        Console.SetOut(writer);
-        IDisplay display = new ConsoleDisplay(writer);
+        IDisplay display = new ConsoleDisplay(_writer);
         display.Render(Enumerable.Empty<Point2D>());
+
         Assert.AreEqual(
             new List<string>
             {
                 "xx",
                 "xx",
-            }, Unlines(writer.ToString().Trim()));
+            }, Unlines(_writer.ToString().Trim()));
+    }
+
+    [Test]
+    public void RenderSinglePoint()
+    {
+        IDisplay display = new ConsoleDisplay(_writer);
+        display.Render(new List<Point2D> {new Border(0, 0)});
+
+        Assert.AreEqual(
+            new List<string>
+            {
+                "xxx",
+                "x x",
+                "xxx",
+            }, Unlines(_writer.ToString().Trim()));
     }
 
     private static List<string> Unlines(string text)
