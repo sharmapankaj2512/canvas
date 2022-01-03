@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Castle.Core.Internal;
 using NUnit.Framework;
 
 namespace Canvas.Tests;
@@ -61,48 +60,5 @@ public class ConsoleDisplayTest
         return text.Split(Environment.NewLine)
             .Select(line => line.Trim())
             .ToList();
-    }
-}
-
-public class ConsoleDisplay : IDisplay
-{
-    private readonly TextWriter _writer;
-
-    public ConsoleDisplay(TextWriter writer)
-    {
-        _writer = writer;
-    }
-
-    public void Render(IEnumerable<Point2D> points)
-    {
-        _writer.WriteLine(string.Join("",
-            BorderRow(points),
-            ContentRows(points),
-            BorderRow(points)));
-    }
-
-    private String BorderRow(IEnumerable<Point2D> points)
-    {
-        return new string('x', BorderRowLength(points)) + Environment.NewLine;
-    }
-
-    private int BorderRowLength(IEnumerable<Point2D> point2Ds)
-    {
-        return point2Ds.Count(p => p.X == 0) + 2;
-    }
-
-    private string ContentRows(IEnumerable<Point2D> points)
-    {
-        if (points.IsNullOrEmpty())
-            return "";
-        return string.Join("\n",
-            points.GroupBy(p => p.X)
-                .Select(row =>
-                    "x" + string.Join("", row.Select(_ => " ")) + "x")) + Environment.NewLine;
-    }
-
-    public void RenderError(string message)
-    {
-        throw new NotImplementedException();
     }
 }
