@@ -48,7 +48,13 @@ public class ConsoleDisplay : IDisplay
     private string PaintRow(IGrouping<int, Point2D> row)
     {
         string PaintPoints() => string.Join("", row.Select(PaintPoint));
-        string PaintPoint(Point2D point) => " ";
+
+        string PaintPoint(Point2D point) => point switch
+        {
+            Border => "x",
+            _ => " "
+        };
+
         return "x" + PaintPoints() + "x";
     }
 }

@@ -27,7 +27,7 @@ public class ConsoleDisplayTest
     }
 
     [Test]
-    public void RenderCanvasBordersWhenNoPoints()
+    public void RenderEmptyPoints()
     {
         IDisplay display = new ConsoleDisplay(_writer);
         display.Render(Enumerable.Empty<Point2D>());
@@ -44,13 +44,28 @@ public class ConsoleDisplayTest
     public void RenderSinglePoint()
     {
         IDisplay display = new ConsoleDisplay(_writer);
-        display.Render(new List<Point2D> {new Border(0, 0)});
+        display.Render(new List<Point2D> {new(0, 0)});
 
         Assert.AreEqual(
             new List<string>
             {
                 "xxx",
                 "x x",
+                "xxx",
+            }, Unlines(_writer.ToString().Trim()));
+    }
+
+    [Test]
+    public void RenderSingleBorderPoint()
+    {
+        IDisplay display = new ConsoleDisplay(_writer);
+        display.Render(new List<Point2D> {new Border(0, 0)});
+
+        Assert.AreEqual(
+            new List<string>
+            {
+                "xxx",
+                "xxx",
                 "xxx",
             }, Unlines(_writer.ToString().Trim()));
     }
