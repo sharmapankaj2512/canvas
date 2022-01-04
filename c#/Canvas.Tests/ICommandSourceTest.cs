@@ -22,7 +22,7 @@ public class ConsoleCommandSource : ICommandSource
 {
     public bool MoveNext()
     {
-        throw new NotImplementedException();
+        return true;
     }
 
     public void Reset()
@@ -30,7 +30,7 @@ public class ConsoleCommandSource : ICommandSource
         throw new NotImplementedException();
     }
 
-    public ICommand Current { get; }
+    public ICommand Current => new CreateCanvas(0, 0);
 
     object IEnumerator.Current => Current;
 
