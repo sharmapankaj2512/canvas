@@ -1,5 +1,6 @@
+using MonadicCSharp;
 using NUnit.Framework;
-using static Canvas.Tests.EitherFactory;
+using static MonadicCSharp.EitherFactory;
 
 namespace Canvas.Tests;
 

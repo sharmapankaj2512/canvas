@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas", "Canvas\Canvas.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas.Tests", "Canvas.Tests\Canvas.Tests.csproj", "{6EF5F55E-6493-43E1-A4B0-9FF1C6EC13F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadicCSharp", "MonadicCSharp\MonadicCSharp.csproj", "{A15DECE8-C5A0-4CFC-B7E5-7C143E36F6CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadicCSharp.Tests", "MonadicCSharp.Tests\MonadicCSharp.Tests.csproj", "{D67C346D-D523-43E6-80DC-C70B0DF2BFAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,13 @@ Global
 		{6EF5F55E-6493-43E1-A4B0-9FF1C6EC13F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EF5F55E-6493-43E1-A4B0-9FF1C6EC13F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EF5F55E-6493-43E1-A4B0-9FF1C6EC13F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A15DECE8-C5A0-4CFC-B7E5-7C143E36F6CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A15DECE8-C5A0-4CFC-B7E5-7C143E36F6CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A15DECE8-C5A0-4CFC-B7E5-7C143E36F6CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A15DECE8-C5A0-4CFC-B7E5-7C143E36F6CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67C346D-D523-43E6-80DC-C70B0DF2BFAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67C346D-D523-43E6-80DC-C70B0DF2BFAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67C346D-D523-43E6-80DC-C70B0DF2BFAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67C346D-D523-43E6-80DC-C70B0DF2BFAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

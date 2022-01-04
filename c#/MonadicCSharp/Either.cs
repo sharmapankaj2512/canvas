@@ -1,6 +1,4 @@
-using System;
-
-namespace Canvas.Tests;
+namespace MonadicCSharp;
 
 public abstract record Either<TL, TR>
 {
@@ -51,7 +49,7 @@ public abstract record Either<TL, TR>
     }
 }
 
-static class EitherFactory
+public static class EitherFactory
 {
     public static Either<TL, TR> Right<TL, TR>(TR rightValue)
     {

@@ -1,6 +1,4 @@
-using System;
-
-namespace Canvas.Tests;
+namespace MonadicCSharp;
 
 public abstract record Maybe<S>
 {

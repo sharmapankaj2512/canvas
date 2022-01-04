@@ -1,8 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using static Canvas.Tests.EitherFactory;
-using static Canvas.Tests.MaybeFactory;
+using MonadicCSharp;
+using static MonadicCSharp.EitherFactory;
+using static MonadicCSharp.MaybeFactory;
 
 namespace Canvas.Tests;
 
@@ -48,7 +49,7 @@ class Canvas
 
     public Maybe<Error> DrawPoint(Tuple<int, int> border)
     {
-        if (border.Item1 < 0 
+        if (border.Item1 < 0
             || border.Item1 >= Width
             || border.Item2 < 0
             || border.Item2 >= Height)

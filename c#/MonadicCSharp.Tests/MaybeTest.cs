@@ -1,6 +1,6 @@
 using NUnit.Framework;
 
-namespace Canvas.Tests;
+namespace MonadicCSharp.Tests;
 
 [TestFixture]
 public class MaybeTest

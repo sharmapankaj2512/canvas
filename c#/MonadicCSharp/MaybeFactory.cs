@@ -1,6 +1,6 @@
-namespace Canvas.Tests;
+namespace MonadicCSharp;
 
-static class MaybeFactory
+public static class MaybeFactory
 {
     public static Maybe<S> Some<S>(S someValue)
     {
