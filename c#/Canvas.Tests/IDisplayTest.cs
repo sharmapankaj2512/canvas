@@ -64,6 +64,13 @@ public class DisplayTest
             }, Unlines(_writer.ToString().Trim()));
     }
 
+    [Test]
+    public void RenderError()
+    {
+        MakeDisplay().RenderError("some error");
+        Assert.AreEqual("some error", _writer.ToString().Trim());
+    }
+
     private IDisplay MakeDisplay()
     {
         return new ConsoleDisplay(_writer);
