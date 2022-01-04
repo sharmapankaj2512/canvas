@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using NUnit.Framework;
 
 namespace Canvas.Tests;
@@ -11,7 +12,9 @@ public class CommandSourceTest
     [Test]
     public void CreateCanvasCommand()
     {
-        var source = new ConsoleCommandSource();
+        var reader = new StringReader("create 0 0");
+        var old = Console.In;
+        var source = new ConsoleCommandSource(reader);
 
         Assert.AreEqual(true, source.MoveNext());
         Assert.AreEqual(new CreateCanvas(0, 0), source.Current);
@@ -20,6 +23,13 @@ public class CommandSourceTest
 
 public class ConsoleCommandSource : ICommandSource
 {
+    private readonly StringReader _reader;
+
+    public ConsoleCommandSource(StringReader reader)
+    {
+        _reader = reader;
+    }
+
     public bool MoveNext()
     {
         return true;
@@ -30,7 +40,15 @@ public class ConsoleCommandSource : ICommandSource
         throw new NotImplementedException();
     }
 
-    public ICommand Current => new CreateCanvas(0, 0);
+    public ICommand Current
+    {
+        get
+        {
+            var rawCommand = _reader.ReadLine();
+            var tokens = rawCommand.Split(" ");
+            return new CreateCanvas(int.Parse(tokens[1]), int.Parse(tokens[2]));
+        }
+    }
 
     object IEnumerator.Current => Current;
 
