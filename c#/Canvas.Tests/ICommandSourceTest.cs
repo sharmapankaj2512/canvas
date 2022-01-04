@@ -24,8 +24,8 @@ public class CommandSourceTest
     {
         var reader = new StringReader("create 0 0\nprint\n");
         var source = new ConsoleCommandSource(reader);
-        source.MoveNext(); // skip create command
-
+        var _ = source.Current; // ignore create
+        
         Assert.AreEqual(true, source.MoveNext());
         Assert.AreEqual(new PrintCanvas(), source.Current);
     }
@@ -54,9 +54,16 @@ public class ConsoleCommandSource : ICommandSource
     {
         get
         {
-            var rawCommand = _reader.ReadLine();
-            var tokens = rawCommand.Split(" ");
-            return new CreateCanvas(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            var rawCommand = _reader.ReadLine().Trim();
+            if (rawCommand.StartsWith("create"))
+            {
+                var tokens = rawCommand.Split(" ");
+                return new CreateCanvas(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            }
+            else
+            {
+                return new PrintCanvas();
+            }
         }
     }
 
