@@ -13,11 +13,21 @@ public class CommandSourceTest
     public void CreateCanvasCommand()
     {
         var reader = new StringReader("create 0 0");
-        var old = Console.In;
         var source = new ConsoleCommandSource(reader);
 
         Assert.AreEqual(true, source.MoveNext());
         Assert.AreEqual(new CreateCanvas(0, 0), source.Current);
+    }
+
+    [Test]
+    public void PrintCanvasCommand()
+    {
+        var reader = new StringReader("create 0 0\nprint\n");
+        var source = new ConsoleCommandSource(reader);
+        source.MoveNext(); // skip create command
+
+        Assert.AreEqual(true, source.MoveNext());
+        Assert.AreEqual(new PrintCanvas(), source.Current);
     }
 }
 
