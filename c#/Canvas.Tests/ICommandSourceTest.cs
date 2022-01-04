@@ -23,9 +23,9 @@ public class CommandSourceTest
 
 public class ConsoleCommandSource : ICommandSource
 {
-    private readonly StringReader _reader;
+    private readonly TextReader _reader;
 
-    public ConsoleCommandSource(StringReader reader)
+    public ConsoleCommandSource(TextReader reader)
     {
         _reader = reader;
     }
@@ -57,9 +57,9 @@ public class ConsoleCommandSource : ICommandSource
         throw new NotImplementedException();
     }
 
-    public IEnumerator<CreateCanvas> GetEnumerator()
+    public IEnumerator<ICommand> GetEnumerator()
     {
-        throw new NotImplementedException();
+        return new ConsoleCommandSource(Console.In);
     }
 
     IEnumerator IEnumerable.GetEnumerator()
