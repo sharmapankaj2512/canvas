@@ -71,6 +71,11 @@ public class ConsoleCommandSource : ICommandSource
                 var tokens = rawCommand.Split(" ");
                 return new CreateCanvas(int.Parse(tokens[1]), int.Parse(tokens[2]));
             }
+            else if (rawCommand.StartsWith("point"))
+            {
+                var tokens = rawCommand.Split(" ");
+                return new DrawPoint(int.Parse(tokens[1]), int.Parse(tokens[2]));
+            }
             else
             {
                 return new PrintCanvas();
