@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Canvas.Tests;
 
 [TestFixture]
-public class ConsoleDisplayTest
+public class DisplayTest
 {
     private TextWriter _originalConsoleOut = null!;
     private StringWriter _writer = null!;
@@ -29,9 +29,7 @@ public class ConsoleDisplayTest
     [Test]
     public void RenderEmptyPoints()
     {
-        IDisplay display = new ConsoleDisplay(_writer);
-        display.Render(Enumerable.Empty<Point2D>());
-
+        MakeDisplay().Render(Enumerable.Empty<Point2D>());
         Assert.AreEqual(
             new List<string>
             {
@@ -43,9 +41,7 @@ public class ConsoleDisplayTest
     [Test]
     public void RenderSinglePoint()
     {
-        IDisplay display = new ConsoleDisplay(_writer);
-        display.Render(new List<Point2D> {new(0, 0)});
-
+        MakeDisplay().Render(new List<Point2D> {new(0, 0)});
         Assert.AreEqual(
             new List<string>
             {
@@ -58,9 +54,7 @@ public class ConsoleDisplayTest
     [Test]
     public void RenderSingleBorderPoint()
     {
-        IDisplay display = new ConsoleDisplay(_writer);
-        display.Render(new List<Point2D> {new Border(0, 0)});
-
+        MakeDisplay().Render(new List<Point2D> {new Border(0, 0)});
         Assert.AreEqual(
             new List<string>
             {
@@ -68,6 +62,11 @@ public class ConsoleDisplayTest
                 "xxx",
                 "xxx",
             }, Unlines(_writer.ToString().Trim()));
+    }
+
+    private IDisplay MakeDisplay()
+    {
+        return new ConsoleDisplay(_writer);
     }
 
     private static List<string> Unlines(string text)
