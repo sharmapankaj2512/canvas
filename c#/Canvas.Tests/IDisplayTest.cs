@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
+using static Canvas.StringExtensions;
 
 namespace Canvas.Tests;
 
@@ -74,12 +75,5 @@ public class DisplayTest
     private IDisplay MakeDisplay()
     {
         return new ConsoleDisplay(_writer);
-    }
-
-    private static List<string> Unlines(string text)
-    {
-        return text.Split(Environment.NewLine)
-            .Select(line => line.Trim())
-            .ToList();
     }
 }
