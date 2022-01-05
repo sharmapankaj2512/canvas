@@ -1,7 +1,6 @@
-using System;
 using MonadicCSharp;
 
-namespace Canvas.Tests;
+namespace Canvas;
 
 public class Repl
 {
@@ -48,7 +47,7 @@ public class Repl
             .ConsumeLeft(error => _display.RenderError(error.Message))
             .ConsumeRight(c => _display.Render(c.Points()));
     }
-    
+
     private void OnDrawPoint(Either<Error, Canvas> canvas, int x, int y)
     {
         canvas.ConsumeRight(c =>

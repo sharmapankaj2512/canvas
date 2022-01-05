@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace Canvas.Tests;
+namespace Canvas;
 
 public interface IDisplay
 {

@@ -1,4 +1,4 @@
-namespace Canvas.Tests;
+namespace Canvas;
 
 public record Error
 {

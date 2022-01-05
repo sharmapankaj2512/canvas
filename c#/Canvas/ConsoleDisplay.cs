@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Castle.Core.Internal;
-
-namespace Canvas.Tests;
+namespace Canvas;
 
 public class ConsoleDisplay : IDisplay
 {
@@ -27,9 +21,14 @@ public class ConsoleDisplay : IDisplay
             BorderRow(ps),
             Environment.NewLine,
             PaintRows(ps),
-            ps.IsNullOrEmpty() ? "" : Environment.NewLine,
+            Empty(ps) ? "" : Environment.NewLine,
             BorderRow(ps),
             Environment.NewLine));
+    }
+
+    private static bool Empty(HashSet<Point2D> ps)
+    {
+        return ps.Count == 0;
     }
 
     private string BorderRow(HashSet<Point2D> points)

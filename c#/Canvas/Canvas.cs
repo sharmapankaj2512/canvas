@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using MonadicCSharp;
 using static MonadicCSharp.EitherFactory;
 using static MonadicCSharp.MaybeFactory;
 
-namespace Canvas.Tests;
+namespace Canvas;
 
-class Canvas
+public class Canvas
 {
     private readonly HashSet<Border> _borders;
     private int Width { get; }
