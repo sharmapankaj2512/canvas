@@ -16,6 +16,11 @@ public interface ICommand
             return new DrawPoint(int.Parse(tokens[1]), int.Parse(tokens[2]));
         }
 
+        if (rawCommand.StartsWith("quit"))
+        {
+            return new QuitCommand();
+        }
+
         return new PrintCanvas();
     }
 }

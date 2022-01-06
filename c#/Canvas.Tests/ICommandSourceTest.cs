@@ -37,4 +37,14 @@ public class CommandSourceTest
         Assert.AreEqual(true, source.MoveNext());
         Assert.AreEqual(new DrawPoint(0, 0), source.Current);
     }
+
+    [Test]
+    public void QuitCommand()
+    {
+        var reader = new StringReader("quit\n");
+        var source = new ConsoleCommandSource(reader);
+
+        Assert.AreEqual(true, source.MoveNext());
+        Assert.AreEqual(new QuitCommand(), source.Current);
+    }
 }
