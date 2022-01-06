@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using NUnit.Framework;
 
@@ -121,13 +122,8 @@ public class ReplTest
 
     private void FakeCommandSource(params ICommand[] commands)
     {
-        var moveNext = _commandSource.SetupSequence(c => c.MoveNext());
-        var current = _commandSource.SetupSequence(c => c.Current);
-        foreach (var command in commands)
-        {
-            moveNext.Returns(true);
-            current.Returns(command);
-        }
+        _commandSource.Setup(d => d.GetEnumerator())
+            .Returns(commands.ToList().GetEnumerator());
     }
 
     private void AssertExpectRenderPoints(List<Point2D> points, int times = 1)

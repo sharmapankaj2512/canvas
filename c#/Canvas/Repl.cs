@@ -17,9 +17,9 @@ public class Repl
     {
         var error = Error.New("create canvas first");
         var canvas = EitherFactory.Left<Error, Canvas>(error);
-        while (_commandSource.MoveNext())
+        foreach (var command in _commandSource)
         {
-            switch (_commandSource.Current)
+            switch (command)
             {
                 case CreateCanvas(var width, var height):
                     canvas = OnCreateCanvas(width, height);
