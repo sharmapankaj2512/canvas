@@ -19,8 +19,11 @@ public interface ICommand
         return new PrintCanvas();
     }
 }
-public record CreateCanvas(int Width, int Height): ICommand;
 
-public record PrintCanvas: ICommand;
+public record CreateCanvas(int Width, int Height) : ICommand;
+
+public record PrintCanvas : ICommand;
 
 public record DrawPoint(int X, int Y) : ICommand;
+
+public record QuitCommand : ICommand;

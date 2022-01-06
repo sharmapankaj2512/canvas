@@ -4,4 +4,5 @@ public interface IDisplay
 {
     void Render(IEnumerable<Point2D> points);
     void RenderError(string message);
+    void Render(string message);
 }

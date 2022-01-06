@@ -14,6 +14,11 @@ public class ConsoleDisplay : IDisplay
         _writer.WriteLine(message);
     }
 
+    public void Render(string message)
+    {
+        throw new NotImplementedException();
+    }
+
     public void Render(IEnumerable<Point2D> points)
     {
         var ps = points.ToHashSet();

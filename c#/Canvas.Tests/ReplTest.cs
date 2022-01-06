@@ -58,7 +58,7 @@ public class ReplTest
             new PrintCanvas());
 
         new Repl(_commandSource.Object, _display.Object).Start();
-        
+
         AssertExpectRenderPoints(new List<Point2D>(), 2);
     }
 
@@ -97,6 +97,19 @@ public class ReplTest
     }
 
     [Test]
+    public void QuitCommand()
+    {
+        FakeCommandSource(
+            new QuitCommand(),
+            new CreateCanvas(1, 1),
+            new PrintCanvas());
+
+        new Repl(_commandSource.Object, _display.Object).Start();
+
+        AssertExpectRenderMessage("Good bye!");
+    }
+
+    [Test]
     public void InvalidDrawPointCommand()
     {
         FakeCommandSource(new CreateCanvas(1, 1), new DrawPoint(-1, 0));
@@ -126,8 +139,14 @@ public class ReplTest
     {
         _display.Verify(d => d.RenderError(It.IsAny<string>()));
     }
+
     private void AssertExpectRenderError(string message)
     {
         _display.Verify(d => d.RenderError(message));
+    }
+
+    private void AssertExpectRenderMessage(string message)
+    {
+        _display.Verify(d => d.Render(message));
     }
 }
