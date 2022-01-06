@@ -16,7 +16,7 @@ public class ConsoleDisplay : IDisplay
 
     public void Render(string message)
     {
-        throw new NotImplementedException();
+        RenderError(message);
     }
 
     public void Render(IEnumerable<Point2D> points)

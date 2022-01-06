@@ -37,12 +37,12 @@ public class ConsoleCommandSource : ICommandSource
 
     public void Dispose()
     {
-        throw new NotImplementedException();
+        _reader.Dispose();
     }
 
     public IEnumerator<ICommand> GetEnumerator()
     {
-        return new ConsoleCommandSource(Console.In);
+        return this;
     }
 
     IEnumerator IEnumerable.GetEnumerator()

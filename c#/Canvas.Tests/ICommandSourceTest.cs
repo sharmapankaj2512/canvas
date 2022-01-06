@@ -41,8 +41,9 @@ public class CommandSourceTest
     [Test]
     public void QuitCommand()
     {
-        var reader = new StringReader("quit\n");
+        var reader = new StringReader("create 1 1\nquit\n");
         var source = new ConsoleCommandSource(reader);
+        var _ = source.Current; // ignore create
 
         Assert.AreEqual(true, source.MoveNext());
         Assert.AreEqual(new QuitCommand(), source.Current);

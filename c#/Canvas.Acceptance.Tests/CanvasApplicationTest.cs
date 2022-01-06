@@ -10,23 +10,28 @@ namespace Canvas.Acceptance.Tests;
 public class CanvasApplicationTest
 {
     [Test]
-    [Ignore("need to handle quit command first")]
     public void ConsoleApplicationTest()
     {
-        var reader = new StringReader("create 2 2\npoint 0 0\n");
+        var reader = new StringReader("create 2 2\npoint 0 0\nquit\n");
         var writer = new StringWriter();
         var display = new ConsoleDisplay(writer);
         var source = new ConsoleCommandSource(reader);
-        var repl = new Repl(source, display);
-        repl.Start();
+        new Repl(source, display).Start();
         
         Assert.AreEqual(
             new List<string>
             {
                 "xxxx",
+                "x  x",
+                "x  x",
+                "xxxx",
+                "",
+                "xxxx",
                 "xx x",
                 "x  x",
                 "xxxx",
+                "",
+                "Good bye!"
             }, Unlines(writer.ToString().Trim()));
     }
 }
