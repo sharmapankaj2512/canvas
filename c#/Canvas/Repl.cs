@@ -31,7 +31,7 @@ public class Repl
                     OnDrawPoint(canvas, x, y);
                     break;
                 case QuitCommand:
-                    _display.Render("Good bye!");
+                    OnQuitCommand();
                     return;
             }
         }
@@ -59,5 +59,10 @@ public class Repl
                 .ConsumeNone(() => _display.Render(c.Points()))
                 .ConsumeSome(e => _display.RenderError(e.Message));
         });
+    }
+
+    private void OnQuitCommand()
+    {
+        _display.Render("Good bye!");
     }
 }
