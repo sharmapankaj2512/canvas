@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonadicCSharp.Tests", "Mona
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Canvas.Acceptance.Tests", "Canvas.Acceptance.Tests\Canvas.Acceptance.Tests.csproj", "{0B5AE7C5-33FB-4B8F-9C8F-EC8BCBEBBB16}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CanvasApplication", "CanvasApplication\CanvasApplication.csproj", "{86287F68-9662-4835-BC7F-54F253404F0D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{0B5AE7C5-33FB-4B8F-9C8F-EC8BCBEBBB16}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B5AE7C5-33FB-4B8F-9C8F-EC8BCBEBBB16}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B5AE7C5-33FB-4B8F-9C8F-EC8BCBEBBB16}.Release|Any CPU.Build.0 = Release|Any CPU
+		{86287F68-9662-4835-BC7F-54F253404F0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{86287F68-9662-4835-BC7F-54F253404F0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{86287F68-9662-4835-BC7F-54F253404F0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{86287F68-9662-4835-BC7F-54F253404F0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
