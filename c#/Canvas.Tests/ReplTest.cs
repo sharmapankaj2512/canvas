@@ -7,8 +7,8 @@ namespace Canvas.Tests;
 [TestFixture]
 public class ReplTest
 {
-    private Mock<ICommandSource> _commandSource;
-    private Mock<IDisplay> _display;
+    private Mock<ICommandSource> _commandSource = null!;
+    private Mock<IDisplay> _display = null!;
 
     [SetUp]
     public void Setup()
