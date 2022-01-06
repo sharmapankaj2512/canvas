@@ -30,6 +30,9 @@ public class Repl
                 case DrawPoint(var x, var y):
                     OnDrawPoint(canvas, x, y);
                     break;
+                case QuitCommand:
+                    _display.Render("Good bye!");
+                    return;
             }
         }
     }
