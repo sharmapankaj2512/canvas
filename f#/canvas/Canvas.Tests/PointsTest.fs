@@ -18,3 +18,7 @@ let OneByTwo() =
 [<Test>]
 let TwoByOne() =
     Assert.AreEqual(set [Point2D(0, 0); Point2D(1, 0)], points(2, 1))
+    
+[<Test>]
+let TwoByTwo() =
+    Assert.AreEqual(set [Point2D(0, 0); Point2D(0, 1); Point2D(1, 0); Point2D(1, 1)], points(2, 2))
