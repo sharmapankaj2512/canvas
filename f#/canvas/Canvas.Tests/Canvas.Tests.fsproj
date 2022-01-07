@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Compile Include="ReplTest.fs" />
+    <Compile Include="PointsTest.fs" />
   </ItemGroup>
 
   <ItemGroup>
