@@ -13,4 +13,5 @@ let OneByOneCanvas() =
     
 [<Test>]
 let OneByTwoCanvas() =
-    Assert.AreEqual(set [Point2D(0, 0), Point2D(0, 1)], points(1, 2))
+    let expected = set [Point2D(0, 0); Point2D(0, 1)]
+    Assert.AreEqual(expected, points(1, 2))

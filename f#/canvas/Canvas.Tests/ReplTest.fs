@@ -11,8 +11,11 @@ type Display = Set<Point> -> unit
 
 type Repl = CommandSource -> Display -> unit -> unit
 
-let points = fun (width: int, height: int) ->
-    if (width = 0 && height = 0) then set [] else set [Point2D(0, 0)]
+let points =
+    fun (width: int, height: int) ->
+        set [ for x in 0 .. width - 1 do
+                  for y in 0 .. height - 1 do
+                      Point2D(x, y) ]
 
 let repl: Repl =
     fun commandSource display ->
