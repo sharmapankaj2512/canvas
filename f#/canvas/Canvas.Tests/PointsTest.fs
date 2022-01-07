@@ -8,10 +8,13 @@ let ZeroByZero() =
     Assert.AreEqual(Set.empty, points(0, 0))
     
 [<Test>]
-let OneByOneCanvas() =
+let OneByOne() =
     Assert.AreEqual(set [Point2D(0, 0)], points(1, 1))
     
 [<Test>]
-let OneByTwoCanvas() =
-    let expected = set [Point2D(0, 0); Point2D(0, 1)]
-    Assert.AreEqual(expected, points(1, 2))
+let OneByTwo() =
+    Assert.AreEqual(set [Point2D(0, 0); Point2D(0, 1)], points(1, 2))
+    
+[<Test>]
+let TwoByOne() =
+    Assert.AreEqual(set [Point2D(0, 0); Point2D(1, 0)], points(2, 1))
