@@ -21,10 +21,8 @@ let Setup () = ()
 
 [<Test>]
 let CreateCanvasCommand () =
-    let commandSource: CommandSource = fun () -> { Width = 0; Height = 0 }
-
-    let display: Display =
+    let commandSource = fun () -> { Width = 0; Height = 0 }
+    let display =
         fun points -> Assert.AreEqual(List<Point2D>.Empty, points)
-
     let start = repl commandSource display
     start ()
