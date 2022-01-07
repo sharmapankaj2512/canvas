@@ -4,4 +4,4 @@ open NUnit.Framework
 
 [<Test>]
 let ZeroByZero() =
-    Assert.Fail()
+    Assert.AreEqual(Set.empty, ReplTest.points(0, 0))

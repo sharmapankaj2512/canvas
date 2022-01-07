@@ -7,11 +7,11 @@ type Command = CreateCanvas of Width: int * Height: int
 
 type Point2D = { X: int; Y: int }
 type CommandSource = unit -> Command
-type Display = Point2D list -> unit
+type Display = Set<Point2D> -> unit
 
 type Repl = CommandSource -> Display -> unit -> unit
 
-let points = fun (width, height) -> List<Point2D>.Empty
+let points = fun (width, height) -> set []
 
 let repl: Repl =
     fun commandSource display ->
