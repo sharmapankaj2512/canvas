@@ -3,7 +3,9 @@ module Canvas.Tests.ReplTest
 open Microsoft.FSharp.Core
 open NUnit.Framework
 
-type Command = CreateCanvas of Width: int * Height: int
+type Command =
+    | CreateCanvas of Width: int * Height: int
+    | Quit
 
 type Point = Point2D of X: int * Y: int
 type CommandSource = unit -> Command
@@ -28,6 +30,13 @@ let Setup () = ()
 [<Test>]
 let CreateCanvasCommand () =
     let commandSource =fun () -> CreateCanvas(Width = 0, Height = 0)
-    let display =fun points -> Assert.AreEqual(List<Point>.Empty, points)
+    let display = fun points -> Assert.AreEqual(List<Point>.Empty, points)
+    let start = repl commandSource display
+    start ()
+
+[<Test>]
+let QuitCommand () =
+    let commandSource =fun () -> Quit
+    let display = fun message -> Assert.AreEqual("Good bye!", message)
     let start = repl commandSource display
     start ()
