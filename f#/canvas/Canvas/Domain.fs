@@ -11,8 +11,14 @@ module Domain =
 
     type CommandSource = unit -> Command
 
-    type Display =
-        abstract Display : Set<Point> -> unit
+    type DisplayMessage =
         abstract Display : string -> unit
+
+    type DisplayPoints =
+        abstract Display : Set<Point> -> unit
+
+    type Display =
+        inherit DisplayMessage
+        inherit DisplayPoints
 
     type Repl = CommandSource -> Display -> unit -> unit
