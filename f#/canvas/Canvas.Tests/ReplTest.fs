@@ -4,15 +4,9 @@ open Canvas
 open Microsoft.FSharp.Core
 open NUnit.Framework
 open Repl
+open Mocks
 
-module ReplTest =
-
-    type MockDisplay(expectedPoints: Set<Point>, expectedMessage: string) =
-        interface Display with
-            member this.Display(points: Set<Point>) = Assert.AreEqual(expectedPoints, points)
-
-            member this.Display(message: string) =
-                Assert.AreEqual(expectedMessage, message)
+module ReplTest =    
 
     [<SetUp>]
     let Setup () = ()
