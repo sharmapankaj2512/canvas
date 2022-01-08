@@ -21,4 +21,4 @@ module Domain =
         inherit DisplayMessage
         inherit DisplayPoints
 
-    type Repl = CommandSource -> Display -> unit -> unit
+    type Repl = CommandSource -> Display -> unit
