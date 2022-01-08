@@ -19,12 +19,18 @@ module ReplTest =
 
     [<Test>]
     let CreateCanvasCommand () =
-        let commandSource = fun () -> CreateCanvas(Width = 1, Height = 1)
+        let commandSource = fun () -> seq [CreateCanvas(Width = 1, Height = 1)]
         let start = repl commandSource (MockDisplay(set [Point2D(0, 0)], ""))
         start ()
 
     [<Test>]
     let QuitCommand () =
-        let commandSource = fun () -> Quit
+        let commandSource = fun () -> seq [Quit]
+        let start = repl commandSource (MockDisplay(set [], "Good bye!"))
+        start ()
+
+    [<Test>]
+    let MultipleCommands =
+        let commandSource = fun () -> seq [CreateCanvas(Width = 1, Height = 1); Quit]
         let start = repl commandSource (MockDisplay(set [], "Good bye!"))
         start ()

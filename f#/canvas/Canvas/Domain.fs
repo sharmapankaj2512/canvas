@@ -9,7 +9,7 @@ module Domain =
 
     type Point = Point2D of X: int * Y: int
 
-    type CommandSource = unit -> Command
+    type CommandSource = unit -> Command seq
 
     type DisplayMessage =
         abstract Display : string -> unit
