@@ -13,4 +13,11 @@ module ReadCommandsTest =
         let reader = new StringReader("quit\n")
         Assert.AreEqual(Quit, consoleCommandSource reader ())
 
+    [<Test>]
+    let parseCreateCanvasCommand () =
+        let reader = new StringReader("create 0 0\n")
+        Assert.AreEqual(CreateCanvas(0, 0), consoleCommandSource(reader)())
     
+    [<Test>]
+    [<Ignore("")>]
+    let parseMultipleCommands = ignore        
