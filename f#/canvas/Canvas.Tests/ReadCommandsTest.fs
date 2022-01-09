@@ -9,7 +9,10 @@ module ReadCommandsTest =
     let consoleCommandSource (reader: TextReader) (): Command =
         let line = reader.ReadLine()
         if (line.StartsWith("create")) then
-            CreateCanvas(0, 0)
+            let tokens = line.Split(" ")
+            let width = tokens[1] |> int
+            let height = tokens[2] |> int
+            CreateCanvas(width, height)
         else
             Quit
 
@@ -20,6 +23,7 @@ module ReadCommandsTest =
 
     [<Test>]
     [<TestCase("create 0 0\n", 0, 0)>]
+    [<TestCase("create 1 1\n", 1, 1)>]
     let parseCreateCanvasCommand (line: string, width: int, height: int) =
         let reader = new StringReader(line)
         Assert.AreEqual(CreateCanvas(width, height), consoleCommandSource reader ())
