@@ -19,9 +19,10 @@ module ReadCommandsTest =
         Assert.AreEqual(Quit, consoleCommandSource reader ())
 
     [<Test>]
-    let parseCreateCanvasCommand () =
-        let reader = new StringReader("create 0 0\n")
-        Assert.AreEqual(CreateCanvas(0, 0), consoleCommandSource reader ())
+    [<TestCase("create 0 0\n", 0, 0)>]
+    let parseCreateCanvasCommand (line: string, width: int, height: int) =
+        let reader = new StringReader(line)
+        Assert.AreEqual(CreateCanvas(width, height), consoleCommandSource reader ())
 
 //    [<Test>]
 //    [<Ignore("")>]
