@@ -6,7 +6,7 @@ open NUnit.Framework
 
 module ReadCommandsTest =
 
-    let consoleCommandSource (reader: TextReader) () = ignore
+    let consoleCommandSource (reader: TextReader) () = Quit
     
     [<Test>]
     let parseQuitCommand () =
