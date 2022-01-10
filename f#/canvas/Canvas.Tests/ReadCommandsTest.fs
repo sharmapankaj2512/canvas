@@ -6,7 +6,7 @@ open NUnit.Framework
 
 module ReadCommandsTest =
 
-    let consoleCommandSource (reader: TextReader) (): Command =
+    let consoleCommandSource (reader: TextReader) () : Command =
         let line = reader.ReadLine().Trim()
         if (line.StartsWith("create")) then
             let tokens = line.Split(" ")
@@ -31,8 +31,15 @@ module ReadCommandsTest =
         Assert.AreEqual(CreateCanvas(width, height), consoleCommandSource reader ())
 
     [<Test>]
-    let parseUnrecognizedCommand() =
-        let reader = new StringReader("### invalid command ###")
+    let parseCreateCanvasIgnoreExcessParameters () =
+        let reader = new StringReader("create 0 1 2")
+        Assert.AreEqual(CreateCanvas(0, 1), consoleCommandSource reader ())
+
+    [<Test>]
+    let parseUnrecognizedCommand () =
+        let reader =
+            new StringReader("### invalid command ###")
+
         Assert.AreEqual(Quit, consoleCommandSource reader ())
 
 //    [<Test>]
