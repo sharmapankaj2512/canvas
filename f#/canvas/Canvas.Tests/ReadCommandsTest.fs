@@ -30,6 +30,11 @@ module ReadCommandsTest =
         let reader = new StringReader(line)
         Assert.AreEqual(CreateCanvas(width, height), consoleCommandSource reader ())
 
+    [<Test>]
+    let parseUnrecognizedCommand() =
+        let reader = new StringReader("### invalid command ###")
+        Assert.AreEqual(Quit, consoleCommandSource reader ())
+
 //    [<Test>]
 //    [<Ignore("")>]
 //    let parseMultipleCommands = ignore
